@@ -7,6 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = $_POST['body'];
   $app->post($title, $username, $body);
 } else {
-  header('Location: ' . SITE_URL . '/_errors/access_denied.php');
+  echo "Access Denied";
   exit;
 }
