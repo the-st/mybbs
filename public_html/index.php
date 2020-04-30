@@ -8,6 +8,7 @@ $posts = $app->load();
 <head>
   <meta charset="utf-8">
   <title>MyBBS</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <nav>
@@ -18,21 +19,35 @@ $posts = $app->load();
     </ul>
   </nav>
   <div class="container">
-    <h1>投稿一覧</h1>
-    <?php foreach ($posts as $post) : ?>
+    <h1>投稿一覧（<?= count($posts) ?>件）</h1>
+    <?php if (!$posts) : ?>
       <section class="post">
         <div class="flex">
-          <h2><?= $post["title"] ?></h2>
-          <p><?= $post["posted"] ?></p>
+          <h2>まだ投稿はありません</h2>
+          <p></p>
         </div>
-        <p>
-          <?= $post["body"] ?>
+        <p class="body">
+          新しい投稿をしてみましょう
         </p>
-        <p>
-          <?= $post["username"] ?>
+        <p class="username">
         </p>
       </section>
-    <?php endforeach ?>
+    <?php else : ?>
+      <?php foreach ($posts as $post) : ?>
+        <section class="post">
+          <div class="flex">
+            <h2><?= h($post["title"]) ?></h2>
+            <p><?= h($post["posted"]) ?></p>
+          </div>
+          <p class="body">
+            <?= str_replace("\n", '<br>', h($post["body"])) ?>
+          </p>
+          <p class="username">
+            <?= h($post["username"]) ?>
+          </p>
+        </section>
+      <?php endforeach ?>
+    <?php endif ?>
   </div>
 </body>
 </html>
